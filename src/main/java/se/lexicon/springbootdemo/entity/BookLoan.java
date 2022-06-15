@@ -14,13 +14,18 @@ public class BookLoan {
     private LocalDate dueDate;
     private boolean returned;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH},fetch = FetchType.LAZY)
     @JoinColumn(table = "book_loan" , name = "app_user_id")
     private AppUser borrower;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(table = "book_loan",name = "book_loan_id")
     private Book book;
+
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "book_borrower_id")
+    private AppUser bookBorrower;
+
 
     public BookLoan() {
         this.loanDate=LocalDate.now();

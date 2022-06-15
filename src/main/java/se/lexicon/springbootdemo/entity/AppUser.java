@@ -3,6 +3,7 @@ package se.lexicon.springbootdemo.entity;
 import javax.persistence.*;
 import javax.persistence.criteria.Join;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,9 +23,13 @@ public class AppUser {//User table..
     @Column(nullable = false)
     private LocalDate regDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
+
+    @OneToMany(mappedBy ="bookBorrower",fetch = FetchType.LAZY)
+    private List<BookLoan> loanedBook;
+
 
     public AppUser() {
         this.regDate=LocalDate.now();

@@ -16,7 +16,7 @@ public class Book {
     private String title;
     private int maxLoanDays;
 
-   @ManyToMany
+   @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Author> authors;
 
     public Book() {
