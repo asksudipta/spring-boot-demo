@@ -1,6 +1,6 @@
 package se.lexicon.springbootdemo.dao;
 
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
+
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class AppUserDaoRepository implements AppUserDao {
     @Override
     @Transactional
     public AppUser create(AppUser appUser) {
-        if(appUser==null) throw new IllegalIdentifierException("AppUser has null value");
+        if(appUser==null) throw new IllegalArgumentException("AppUser has null value");
         entityManager.persist(appUser);
         return appUser;
     }
@@ -44,7 +44,7 @@ public class AppUserDaoRepository implements AppUserDao {
     @Transactional
     public void delete(int id) {
         AppUser result = findById(id);
-        if(result==null)throw new IllegalIdentifierException("Id has null value");
+        if(result==null)throw new IllegalArgumentException("Id has null value");
         entityManager.remove(result);
 
     }

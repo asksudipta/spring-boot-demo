@@ -6,52 +6,51 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tbl-User")
+//@Table(name = "tbl-User")
 public class AppUser {//User table..
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//This means it auto increment the appuser-Id .
-    private int appUserId;
+    private int id;
 
     @Column( length = 150)//length of the username field..nullable auto true
     private String userName;
 
-    @Column(length = 8)
+    @Column
     private String password;
 
     @Column(nullable = false)
     private LocalDate regDate;
 
     @OneToOne
-    @JoinColumn(name = "detailsId",referencedColumnName = "aapUserId")
-    // foreign key (appUserId) references address(detailsId)
+    @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
+
     public AppUser() {
         this.regDate=LocalDate.now();
     }
 
-
-    public AppUser(String userName, String password, LocalDate birthDate) {
+    public AppUser(String userName, String password, LocalDate regDate) {
         this();
         this.userName = userName;
         this.password = password;
-        this.regDate = birthDate;
+        this.regDate = regDate;
     }
 
-    public AppUser(int appUserId, String userName, String password, LocalDate birthDate) {
-        this.appUserId = appUserId;
+    public AppUser(int id, String userName, String password, LocalDate regDate, Details details) {
+        this.id = id;
         this.userName = userName;
         this.password = password;
-        this.regDate = birthDate;
-        setDetails(details);
+        this.regDate = regDate;
+        this.details = details;
     }
 
-    public int getAppUserId() {
-        return appUserId;
+    public int getId() {
+        return id;
     }
 
-    public void setAppUserId(int appUserId) {
-        this.appUserId = appUserId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -91,18 +90,18 @@ public class AppUser {//User table..
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AppUser appUser = (AppUser) o;
-        return appUserId == appUser.appUserId && Objects.equals(userName, appUser.userName) && Objects.equals(password, appUser.password) && Objects.equals(regDate, appUser.regDate) && Objects.equals(details, appUser.details);
+        return id == appUser.id && Objects.equals(userName, appUser.userName) && Objects.equals(password, appUser.password) && Objects.equals(regDate, appUser.regDate) && Objects.equals(details, appUser.details);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(appUserId, userName, password, regDate, details);
+        return Objects.hash(id, userName, password, regDate, details);
     }
 
     @Override
     public String toString() {
         return "AppUser{" +
-                "appUserId=" + appUserId +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", regDate=" + regDate +

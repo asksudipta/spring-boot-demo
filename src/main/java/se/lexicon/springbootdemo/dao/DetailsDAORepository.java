@@ -42,7 +42,7 @@ public class DetailsDAORepository implements DetailsDao{
     @Override
     @Transactional
     public void delete(Details details) {
-       findById(details.getDetailsId());
+       //findById(details.getDetailsId());
        entityManager.remove(details);
     }
 }

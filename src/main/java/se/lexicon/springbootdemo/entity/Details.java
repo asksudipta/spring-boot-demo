@@ -10,7 +10,7 @@ public class Details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)//Can not update the field manually
-    private int detailsId;
+    private int id;
 
     @Column(length = 150, unique = true)
     private String email;
@@ -21,6 +21,7 @@ public class Details {
     @Column(length = 25)
     private LocalDate birthDate;
 
+
     public Details() {
     }
 
@@ -30,19 +31,19 @@ public class Details {
         this.birthDate = birthDate;
     }
 
-    public Details(int detailsId, String email, String name, LocalDate birthDate) {
-        this.detailsId = detailsId;
+    public Details(int id, String email, String name, LocalDate birthDate) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.birthDate = birthDate;
     }
 
-    public int getDetailsId() {
-        return detailsId;
+    public int getId() {
+        return id;
     }
 
-    public void setDetailsId(int detailsId) {
-        this.detailsId = detailsId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -74,18 +75,18 @@ public class Details {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Details details = (Details) o;
-        return detailsId == details.detailsId && Objects.equals(email, details.email) && Objects.equals(name, details.name) && Objects.equals(birthDate, details.birthDate);
+        return id == details.id && Objects.equals(email, details.email) && Objects.equals(name, details.name) && Objects.equals(birthDate, details.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(detailsId, email, name, birthDate);
+        return Objects.hash(id, email, name, birthDate);
     }
 
     @Override
     public String toString() {
         return "Details{" +
-                "detailsId=" + detailsId +
+                "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
