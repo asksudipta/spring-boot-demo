@@ -1,8 +1,10 @@
 package se.lexicon.springbootdemo.entity;
 
+import org.hibernate.mapping.Array;
+
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
 @Entity
 public class Author {
 
@@ -16,15 +18,25 @@ public class Author {
     @ManyToMany(mappedBy = "authors",fetch = FetchType.LAZY)
     private  Set<Book>writtenBooks;
 
-    public Author() {
+
+    public void writtenBooksByAuthor(Book book) {
+        if(book==null)throw new IllegalArgumentException("Book has null value");
+
+        //Check the parameter is null and convert Set to Arraylist
+        if(writtenBooks==null) writtenBooks=new HashSet<>(writtenBooks);
+        List<Book> bookList=new ArrayList<>(writtenBooks);
+
+        if(!writtenBooks.contains(book))writtenBooks.add(book);
+        //book.getAuthors().add(this);
     }
 
+    public Author() {
+    }
     public Author(String firstName, String lastName, Set<Book> writtenBooks) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.writtenBooks = writtenBooks;
     }
-
     public Author(int authorId, String firstName, String lastName, Set<Book> writtenBooks) {
         this.authorId = authorId;
         this.firstName = firstName;

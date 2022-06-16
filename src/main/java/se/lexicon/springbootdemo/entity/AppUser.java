@@ -3,6 +3,7 @@ package se.lexicon.springbootdemo.entity;
 import javax.persistence.*;
 import javax.persistence.criteria.Join;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class AppUser {//User table..
     @GeneratedValue(strategy = GenerationType.IDENTITY)//This means it auto increment the appuser-Id .
     private int id;
 
-    @Column( length = 150)//length of the username field..nullable auto true
+    @Column( length = 150)//length of the username field.nullable auto true
     private String userName;
 
     @Column
@@ -28,7 +29,7 @@ public class AppUser {//User table..
     private Details details;
 
     @OneToMany(mappedBy ="bookBorrower",fetch = FetchType.LAZY)
-    private List<BookLoan> loanedBook;
+    private List<BookLoan> loanedBooks;
 
 
     public AppUser() {
@@ -48,6 +49,32 @@ public class AppUser {//User table..
         this.password = password;
         this.regDate = regDate;
         this.details = details;
+    }
+
+    //add to loanbook
+    //check book loan parameter that should not be null.
+    // check loanbooks if is null instantiate it.
+    public void loanedBook(BookLoan bookLoan){
+
+        if(bookLoan==null)throw new IllegalArgumentException("Loaned book value is null");
+        if(loanedBooks==null) loanedBooks=new ArrayList<>();
+        if(!loanedBooks.contains(bookLoan)) loanedBooks.add(bookLoan);
+        bookLoan.setBorrower(this);
+    }
+    //remove from loanbook
+    //compare with project sollution
+    public void returnedBook(BookLoan bookLoan){
+        if(bookLoan==null)throw new IllegalArgumentException("Book loan value is null");
+        if(loanedBooks==null)loanedBooks=new ArrayList<>();
+        loanedBooks.remove(bookLoan);
+    }
+
+    public List<BookLoan> getLoanedBooks() {
+        return loanedBooks;
+    }
+
+    public void setLoanedBooks(List<BookLoan> loanedBooks) {
+        this.loanedBooks = loanedBooks;
     }
 
     public int getId() {
